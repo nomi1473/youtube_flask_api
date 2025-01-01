@@ -26,6 +26,8 @@ def process_text():
 
 def get_youtube_transcript(video_id):
     try:
+        print(f"id is {video_id}")
+
         # List all available transcripts for the video
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
 
