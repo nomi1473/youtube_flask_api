@@ -66,11 +66,31 @@ def get_youtube_transcript(video_id):
         print(f"Error fetching transcript: {e}")
         return None, None, None
 
+def get_youtube_transcript_with_pytube(video_id):
+    try:
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
+        yt = YouTube(video_url)
+
+        # Get available captions
+        caption = yt.captions.get_by_language_code('en')  # You can specify 'en' or other languages
+
+        if caption:
+            # Get the caption text
+            caption_text = caption.generate_srt_captions()
+            return caption_text, "am", "ss"
+        else:
+            print("No captions available.")
+            return None, None , None
+    except Exception as e:
+        print(f"Error: {e}")
+            return None, None , None
+
+
 @app.route('/process_video_txt', methods=['POST'])
 def process_video_txt():
     data = request.json
     inputTxt = data.get('text')
-    text, language, caption_type = get_youtube_transcript(inputTxt)
+    text, language, caption_type = get_youtube_transcript_with_pytube(inputTxt)
     if text:
         print(f"Detected Language: {language}")
         print(f"Caption Type: {caption_type}")
