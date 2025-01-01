@@ -33,7 +33,7 @@ def get_youtube_transcript(video_id):
         for transcript in transcript_list:
             language = transcript.language_code
 
-            print("langaguge is {language}")
+            print(f"langaguge is {language}")
             # Check if the transcript is auto-generated or manually created
             caption_type = "auto" if transcript.is_generated else "manual"
 
